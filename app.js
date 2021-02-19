@@ -58,10 +58,28 @@ $(document).ready(function () {
                 });
             },
             error: function (response) {
-                alert(response);
+                console.log(response);
+            },
+        });
+    });
+    $(".page-link").click(function () {
+        $("#container").empty();
+        let pageUrl = `https://reqres.in/api/users?page=${$(this).text()}`;
+        $.ajax({
+            type: "Get",
+            url: pageUrl,
+            dataType: "json",
+            data: {},
+            success: function (object) {
+                $.each(object.data, function (i, item) {
+                    $("#container").append(
+                        `<tr id=${item.id}><td>${item.id}</td><td>${item.first_name}</td><td>${item.last_name}</td><td>${item.email}</td><td><i id="1" class="bi-check-circle toggle" style="font-size: 1rem; color: green"></i></td><td><i id='${item.id}' class='bi-trash delete' style='font-size: 1rem; color: rgb(235, 62, 62)'></i></td></tr>`
+                    );
+                });
+            },
+            error: function (response) {
+                console.log(response);
             },
         });
     });
 });
-
-//YES=tik NO=cross  DELETE=bin emoji
